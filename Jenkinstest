@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    parameters {
+        choice(name: 'ENVIORNMENT', choices: ['DEVLOPMENT', 'STAGING ', 'PRODUCTION'], description: 'Select Enviornment')
+        password(name: 'APIKEY', defaultValue: 'api1234', description: 'Enter a API keey')
+        text(name: 'CHANGELOG', defaultValue: 'This is change log', description: 'Enter some information about the Change')
+    }
+    stages {
+        stage('Test') {
+            steps {
+                echo "This is Test stage"
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "This is deployment stage"
+            }
+        }
+        stage('Report') {
+            steps {
+                sh "printf \"${params.CHANGELOG}\"  > ${params.ENVIORNMENT}-report.txt"
+            }
+        }
+    }
+}
